@@ -14,6 +14,7 @@ files {
 }
 
 escrow_ignore {
+  'client.lua',
   'config/shared.lua', 
   'config/item.lua'
 }
