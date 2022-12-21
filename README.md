@@ -1,4 +1,4 @@
-# Grappling Gun | QB/ESX/STANDALONE
+# Air Suspension | QB/ESX/STANDALONE
 
 If you need support I now have a discord available, it helps me keep track of issues and give better support.
 
@@ -17,21 +17,22 @@ https://discord.gg/ESwSKregtt
 
 - Add these lines to your qb-core > shared lua under the Items section
 ```lua
-	["grapple"] = {
-		["name"] = "grapple",                                                        
-		["label"] = "Grapple Gun",
+	["airsuspension"] = {
+		["name"] = "airsuspension",                                                        
+		["label"] = "Air Suspension",
 		["weight"] = 1000,
 		["type"] = "item",
-		["image"] = "grapple.png",
+		["image"] = "airsuspension.png",
 		["unique"] = false,
 		["useable"] = true,
 		["shouldClose"] = true,
 		["combinable"] = nil,
 		["description"] = "Where are you?"
-    	},
+    },
 ```
 # ESX
 
+- Insert SQL
 ``` sql
-    INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('grapple', 'Grapple Gun', 2, 0, 1);
+    INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('airsuspension', 'Air Suspension', 2, 0, 1);
 ```

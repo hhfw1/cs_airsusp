@@ -6,15 +6,16 @@ description 'Code Studio Air Suspension'
 ui_page 'ui/index.html'
 
 client_script 'client.lua'
-server_script 'server.lua'
-shared_script 'shared.lua'
+server_scripts {'server.lua', 'config/item.lua'}
+shared_script 'config/shared.lua'
 
 files {
 	'ui/**',
 }
 
 escrow_ignore {
-  'shared.lua', 
+  'config/shared.lua', 
+  'config/item.lua'
 }
 
 lua54 'yes'

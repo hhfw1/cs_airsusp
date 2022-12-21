@@ -1,10 +1,4 @@
-if CodeStudio.ServerType == "QB" then 
-    QBCore = exports[CodeStudio.QBCoreGetCoreObject]:GetCoreObject()
-elseif CodeStudio.ServerType == "ESX" then 
-    ESX = exports[CodeStudio.ESXGetSharedObject]:getSharedObject()
-end
-
-
+local VehData = {}
 
 
 AddEventHandler('onResourceStart', function(resource)
@@ -17,7 +11,6 @@ AddEventHandler('onResourceStart', function(resource)
 end)
  
 
-
 RegisterNetEvent("baseevents:enteredVehicle", function(currentVehicle, currentSeat)
     local src = source
     if (currentSeat == -1) then
@@ -26,26 +19,32 @@ RegisterNetEvent("baseevents:enteredVehicle", function(currentVehicle, currentSe
 end)
 
 
-
 RegisterServerEvent('cs:airsus:fetch', function(netID)
 	local src = source
 	local loadFile = LoadResourceFile(GetCurrentResourceName(), "./saveData.json")  
 	local openData = json.decode(loadFile)
 	local found = false
 	plate = GetVehicleNumberPlateText(NetworkGetEntityFromNetworkId(netID))
-	if openData then
-		for k, v in pairs(openData) do
-			if v.plate == plate then
-				found = true
-				TriggerClientEvent('cs:airsus:fetchChange', -1, netID, v.value, v.level)
+	if CodeStudio.SaveAfterRestart then 
+		if openData then
+			for k, v in pairs(openData) do
+				if v.plate == plate then
+					found = true
+					TriggerClientEvent('cs:airsus:fetchChange', -1, netID, v.value, v.level)
+				end
+			end
+			if not found then
+				TriggerClientEvent('cs:airsus:fetchChange', src, netID, 0, 0)
 			end
 		end
-		if not found then
+	else
+		if VehData[plate] then 
+			TriggerClientEvent('cs:airsus:fetchChange', -1, netID, VehData[plate].value, VehData[plate].level)
+		else
 			TriggerClientEvent('cs:airsus:fetchChange', src, netID, 0, 0)
 		end
 	end
 end)
-
 
 
 
@@ -55,20 +54,34 @@ RegisterServerEvent('cs:airsus:update', function(netID, level, value)
 	local newopenData = {}
 	local found = false
 	plate = GetVehicleNumberPlateText(NetworkGetEntityFromNetworkId(netID))
-	if openData then
-		for k, v in pairs(openData) do
-			if v.plate == plate then
-				found = true
-				v.value = value
-				v.level = level
+	if CodeStudio.SaveAfterRestart then 
+		if openData then
+			for k, v in pairs(openData) do
+				if v.plate == plate then
+					found = true
+					v.value = value
+					v.level = level
+				end
+				newopenData[#newopenData+1] = v
 			end
-			newopenData[#newopenData+1] = v
+			if not found then 
+				local newValue = {plate = plate, value = value, level = level}
+				newopenData[#newopenData+1] = newValue
+			end
+			SaveResourceFile(GetCurrentResourceName(), "saveData.json", json.encode(newopenData), -1)
 		end
-		if not found then 
+		TriggerClientEvent('cs:airsus:fetchChange', -1, netID, value, level)
+	else
+		if VehData[plate] then 
+			VehData[plate].value = value
+			VehData[plate].level = level
+		else
 			local newValue = {plate = plate, value = value, level = level}
-            newopenData[#newopenData+1] = newValue
+			VehData[plate] = newValue
 		end
-		SaveResourceFile(GetCurrentResourceName(), "saveData.json", json.encode(newopenData), -1)
+		TriggerClientEvent('cs:airsus:fetchChange', -1, netID, value, level)
 	end
-	TriggerClientEvent('cs:airsus:fetchChange', -1, netID, value, level)
 end)
+
+
+

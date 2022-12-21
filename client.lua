@@ -1,16 +1,8 @@
-if CodeStudio.ServerType == "QB" then 
-    QBCore = exports[CodeStudio.QBCoreGetCoreObject]:GetCoreObject()
-elseif CodeStudio.ServerType == "ESX" then 
-    ESX = exports[CodeStudio.ESXGetSharedObject]:getSharedObject()
-end
-
-local level = 0
-
+local level = nil
 
 RegisterNetEvent("cs:airsus:enterVeh", function(entityId)
     TriggerServerEvent('cs:airsus:fetch', NetworkGetNetworkIdFromEntity(entityId))
 end)
-
 
 
 RegisterNetEvent("cs:airsus:fetchChange", function(curVeh, value, lvl)
@@ -19,18 +11,20 @@ RegisterNetEvent("cs:airsus:fetchChange", function(curVeh, value, lvl)
 end)
 
 
-
-RegisterCommand('air', function()
+function OpenSuspensionUI()
+    if not IsPedInAnyVehicle(PlayerPedId()) then Notify(CodeStudio.Language.not_veh) return end
+    if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) ~= PlayerPedId() then Notify(CodeStudio.Language.only_driver) return end
     SetNuiFocus(true, true)
     SendNUIMessage({
         action = "open",
         data = {
-            lvl = level,
+            lvl = level or 0,
         }
     })
-end)
-
-
+    if not level then
+        TriggerServerEvent('cs:airsus:fetch', NetworkGetNetworkIdFromEntity(GetVehiclePedIsIn(PlayerPedId())))
+    end
+end
 
 
 RegisterNUICallback('cs:airsus:change', function(data, cb)
@@ -38,14 +32,14 @@ RegisterNUICallback('cs:airsus:change', function(data, cb)
     local vPlate = GetVehicleNumberPlateText(veh)
     if data.type == 'up' then 
         if level == CodeStudio.Maximum then 
-            cb('Maximum')
+            cb(CodeStudio.Language.max)
             return 
         end
         SetVehicleSuspensionHeight(veh, GetVehicleSuspensionHeight(veh) - CodeStudio.ChangePerLevel)
         level = level + 1
     elseif data.type == 'down' then 
         if level == CodeStudio.Minimum then 
-            cb('Minimum')
+            cb(CodeStudio.Language.min)
             return 
         end
         SetVehicleSuspensionHeight(veh, GetVehicleSuspensionHeight(veh) + CodeStudio.ChangePerLevel)
@@ -62,5 +56,8 @@ RegisterNUICallback('cs:airsus:closeUI', function(data,cb)
 end)
 
 
+RegisterNetEvent("cs:airsus:openUI", function()
+    OpenSuspensionUI()
+end)
 
-SetNetworkWalkMode(true)
+
