@@ -12,7 +12,7 @@
   
   
   body {
-    display: none;
+    /* display: none; */
     flex-direction: column;
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -24,71 +24,22 @@
   
   
   .card {
-    background: #191c29;
     width: var(--card-width);
     height: var(--card-height);
     padding: 3px;
     position: relative;
-    border-radius: 6px;
+    border-radius: 30px;
     justify-content: center;
     align-items: center;
     text-align: center;
     display: flex;
     font-size: 1.5em;
     color: rgb(88 199 250 / 0%);
+    border: 3px solid black;
+    background:linear-gradient(to right, rgb(126, 126, 128), transparent),
+    url(https://grainy-gradients.vercel.app/noise.svg);
   }
   
-  .card::before {
-    content: "";
-    width: 104%;
-    height: 102%;
-    border-radius: 8px;
-    background-image: linear-gradient(
-      var(--rotate)
-      , #34a853, #fbbc05 43%, #ea4335);
-      position: absolute;
-      z-index: -1;
-      top: -1%;
-      left: -2%;
-      animation: spin 2.5s linear infinite;
-  }
-  
-  .card::after {
-    position: absolute;
-    content: "";
-    top: calc(var(--card-height) / 6);
-    left: 0;
-    right: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-    margin: 0 auto;
-    transform: scale(0.8);
-    filter: blur(calc(var(--card-height) / 6));
-    background-image: linear-gradient(
-      var(--rotate)
-      , #5ddcff, #3c67e3 43%, #4e00c2);
-      opacity: 1;
-    transition: opacity .5s;
-    animation: spin 2.5s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% {
-      --rotate: 0deg;
-    }
-    100% {
-      --rotate: 360deg;
-    }
-  }
-  
-  a {
-    color: #212534;
-    text-decoration: none;
-    font-family: sans-serif;
-    font-weight: bold;
-    margin-top: 2rem;
-  }
   button{
     background: none;
     border: none;
@@ -102,16 +53,16 @@
     margin-top: 20px;
   }
   .middle{
-    background: rgba( 255, 255, 255, 0.17 );
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     text-align: center;
     color: #fff;
     font-family: 'Digital-7 Mono', sans-serif;
-    /* font-family: 'Digital-7', sans-serif;
-    font-family: 'Digital-7 Italic', sans-serif; */
     text-transform: uppercase;
     font-weight: bold;
     padding: 5px;
     font-size: 20px;
+    background: rgba( 0, 0, 0, 0.6 );
+    box-shadow: 0 8px 32px 0 rgba(10, 10, 10, 0.37);
+    backdrop-filter: blur( 4px );
   }
