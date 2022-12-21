@@ -12,7 +12,7 @@ CodeStudio.ESXGetSharedObject = 'es_extended' --ONLY EDIT IF YOU ARE USING ESX I
 
 
 
-CodeStudio.Minimum = -10            --Minimum Level of Height 
+CodeStudio.Minimum = -5            --Minimum Level of Height 
 CodeStudio.Maximum = 5              --Maximum Level of Height 
 CodeStudio.ChangePerLevel = 0.03    --Change og Height Per Level (Keep Value in Decimals)
 

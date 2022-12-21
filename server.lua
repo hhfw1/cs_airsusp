@@ -19,6 +19,12 @@ RegisterNetEvent("baseevents:enteredVehicle", function(currentVehicle, currentSe
 end)
 
 
+RegisterNetEvent('entityCreating', function(entity)
+	if VehData[GetVehicleNumberPlateText(entity)] then 
+		TriggerClientEvent('cs:airsus:fetchChange', -1, entity, VehData[GetVehicleNumberPlateText(entity)].value, VehData[GetVehicleNumberPlateText(entity)].level)
+	end
+end)
+
 RegisterServerEvent('cs:airsus:fetch', function(netID)
 	local src = source
 	local loadFile = LoadResourceFile(GetCurrentResourceName(), "./saveData.json")  
@@ -31,6 +37,10 @@ RegisterServerEvent('cs:airsus:fetch', function(netID)
 				if v.plate == plate then
 					found = true
 					TriggerClientEvent('cs:airsus:fetchChange', -1, netID, v.value, v.level)
+					if not VehData[plate] then
+						local newValue = {plate = v.plate, value = v.value, level = v.level}
+						VehData[plate] = newValue
+					end
 				end
 			end
 			if not found then
@@ -61,12 +71,15 @@ RegisterServerEvent('cs:airsus:update', function(netID, level, value)
 					found = true
 					v.value = value
 					v.level = level
+					VehData[plate].value = value
+					VehData[plate].level = level
 				end
 				newopenData[#newopenData+1] = v
 			end
 			if not found then 
 				local newValue = {plate = plate, value = value, level = level}
 				newopenData[#newopenData+1] = newValue
+				VehData[plate] = newValue
 			end
 			SaveResourceFile(GetCurrentResourceName(), "saveData.json", json.encode(newopenData), -1)
 		end

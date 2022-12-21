@@ -7,7 +7,9 @@ end)
 
 RegisterNetEvent("cs:airsus:fetchChange", function(curVeh, value, lvl)
     level = lvl
-    SetVehicleSuspensionHeight(NetToVeh(curVeh), value)
+    if GetVehicleSuspensionHeight(NetToVeh(curVeh)) ~= value then
+        SetVehicleSuspensionHeight(NetToVeh(curVeh), value)
+    end
 end)
 
 
