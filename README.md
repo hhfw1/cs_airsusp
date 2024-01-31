@@ -1,8 +1,6 @@
 # Air Suspension | QB/ESX/STANDALONE
 
-If you need support I now have a discord available, it helps me keep track of issues and give better support.
-
-https://discord.gg/ESwSKregtt
+https://discord.gg/62jqEKz8Sb
 
 
 # INSTALLATION
