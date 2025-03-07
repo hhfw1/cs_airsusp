@@ -1,18 +1,57 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <div class="card">
-      <div>
-        <button onclick="clickButton('up')"><img src="arrow.png" class="up"></button>
-        <div class="middle" id="info">1</div>
-        <button onclick="clickButton('down')"><img src="arrow.png" class="down"></button>
-      </div>
-    </div>
-    <script src="main.js"></script>
-  </body>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
+    </head>
+    <body style="display: none;">
+        <div class="card">
+            <div>
+                <button onclick="clickButton('up')">
+                    <img src="arrow.png" class="up">
+                </button>
+                <div class="middle" id="info"></div>
+                <button onclick="clickButton('down')">
+                    <img src="arrow.png" class="down">
+                </button>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script>
+            function clickButton(type) {
+                $.post(`https://${GetParentResourceName()}/change`, JSON.stringify({
+                    type: type,
+                    value: $("#info").text()
+                }))
+                .done(function(response) {
+                    $("#info").text(response);
+                })
+            }
+        
+            function Open(level) {
+                $("body").css("display", "flex").hide().fadeIn();
+                $("#info").text(level);
+            }
+        
+            function Close() {
+                $("body").fadeOut();
+                $.post(`https://${GetParentResourceName()}/closeUI`);
+            }
+        
+            $(document).ready(function () {
+                window.addEventListener("message", function (event) {
+                    switch (event.data.action) {
+                        case "openUI":
+                            Open(event.data.level)
+                        break;
+                    }
+                });
+                $(document).on("keydown", function (event) {
+                    if (event.key === "Escape") Close();
+                });
+            });
+        </script>
+    </body>
 </html>

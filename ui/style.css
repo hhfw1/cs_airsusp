@@ -1,58 +1,57 @@
-
 :root {
-  --card-height: 30vh;
-  --card-width: calc(var(--card-height) / 1.5);
+    --card-height: 30vh;
+    --card-width: calc(var(--card-height) / 1.5);
 }
 
 body {
-  display: none;
-  flex-direction: column;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  box-sizing: border-box;
-  position: absolute;
-  top: 350px;
-  right: 100px;
+    display: none;
+    flex-direction: column;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+    position: absolute;
+    top: 350px;
+    right: 100px;
 }
-
 
 .card {
-  width: var(--card-width);
-  height: var(--card-height);
-  padding: 3px;
-  position: relative;
-  border-radius: 30px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  display: flex;
-  font-size: 1.5em;
-  color: rgb(88 199 250 / 0%);
-  border: 3px solid black;
-  background:linear-gradient(to right, rgb(126, 126, 128), transparent), url(https://grainy-gradients.vercel.app/noise.svg);
+    width: var(--card-width);
+    height: var(--card-height);
+    padding: 3px;
+    position: relative;
+    border-radius: 30px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 1.5em;
+    color: rgb(88 199 250 / 0%);
+    border: 3px solid black;
+    background: linear-gradient(to right, rgb(126, 126, 128), transparent),
+        url(https://grainy-gradients.vercel.app/noise.svg);
 }
 
-button{
-  background: none;
-  border: none;
-  cursor: pointer;
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
 }
-.up{
-  transform: rotate(180deg);
-  margin-bottom: 20px;
+.up {
+    transform: rotate(180deg);
+    margin-bottom: 20px;
 }
-.down{
-  margin-top: 20px;
+.down {
+    margin-top: 20px;
 }
-.middle{
-  border-radius: 10px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
-  text-align: center;
-  color: #fff;       
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;                         
-  text-transform: uppercase;
-  font-weight: 400;
-  padding: 5px;
-  font-size: 20px;
-  background: rgba( 0, 0, 0, 0.6 );
+.middle {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+    color: #fff;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 5px;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.6);
 }

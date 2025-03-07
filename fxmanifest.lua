@@ -1,23 +1,17 @@
 fx_version 'adamant'
+version '2.0'
 game 'gta5'
-author 'Team CodeStudio: https://discord.gg/ESwSKregtt'
-description 'Code Studio Air Suspension'
+author 'CodeStudio'
+description 'Air Suspension'
 
 ui_page 'ui/index.html'
 
-client_script 'client.lua'
-server_scripts {'server.lua', 'config/item.lua'}
-shared_script 'config/shared.lua'
+shared_scripts {'@ox_lib/init.lua', 'config.lua'}
+client_script 'main/client.lua'
+server_script 'main/server.lua'
 
-files {
-	'ui/**',
-}
+files {'ui/**'}
 
-escrow_ignore {
-  'server.lua',
-  'client.lua',
-  'config/shared.lua', 
-  'config/item.lua'
-}
+dependencies {'ox_lib'}
 
 lua54 'yes'
