@@ -24,11 +24,11 @@ end)
 function OpenSuspensionUI()
     local veh = cache.vehicle
     if not veh then
-        print(CodeStudio.Language.not_veh)
+        lib.notify({description = CodeStudio.Language.not_veh})
         return
     end
-    if cache.seat ~= -1 then
-        print(CodeStudio.Language.only_driver)
+    if GetPedInVehicleSeat(veh, -1) ~= cache.ped then
+        lib.notify({description = CodeStudio.Language.only_driver})
         return
     end
 
@@ -45,7 +45,7 @@ end
 RegisterNUICallback('change', function(data, cb)
     local veh = cache.vehicle
     if not veh then
-        print(CodeStudio.Language.not_veh)
+        lib.notify({description = CodeStudio.Language.not_veh})
         return
     end
 
